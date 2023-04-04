@@ -11,22 +11,6 @@ bool	str_is_pos_numeric(std::string str)
 	return (true);
 }
 
-bool	check_duplicates(std::string *nbs, int size)
-{
-	int	j;
-
-	for (int i = 0; i < size; ++i)
-	{
-		j = 0;
-		for (; j < size; ++j)
-		{
-			if (i != j && nbs[i] == nbs[j])
-				return (false);
-		}
-	}
-	return (true);
-}
-
 bool	check_params(std::string *nbs, int size)
 {
 	int	ovf_test;
@@ -36,8 +20,6 @@ bool	check_params(std::string *nbs, int size)
 		if (nbs[i].size() < 1)
 			return (false);
 		if (str_is_pos_numeric(nbs[i]) == false)
-			return (false);
-		if (check_duplicates(nbs, size) == false)
 			return (false);
 		if (!(std::stringstream(nbs[i]) >> ovf_test))
 			return (false);

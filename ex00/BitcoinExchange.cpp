@@ -179,12 +179,13 @@ static bool	check_valid_date_format(std::string date, int trigger)
 	size_t		start = 0;
 	size_t		end = date.find('-', start);
 
-	if (strptime(date.c_str(), "%Y-%m-%d", &check_format) == NULL)
+	if (strptime(date.c_str(), "%Y-%m-%d", &check_format) == NULL
+		|| date.size() != 10)
 	{
 		if (trigger == 1)
-			std::cerr << date << " ==> Invalid date format" << std::endl;
+			std::cerr << date << " ==> Invalid format" << std::endl;
 		else
-			std::cerr << "Invalid date format" << std::endl;
+			std::cerr << "Invalid format" << std::endl;
 		return (false);
 	}
 	year = atoi(date.substr(start, end).c_str());

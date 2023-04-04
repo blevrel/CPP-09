@@ -1,4 +1,0 @@
-merge sort : ne sert que une fois que j'ai des groupes de nombres triés. Le insert sort s'occupe de creer les groupes de nombres
-avoir un index dans chaque groupe, comparer chaque nombre par rapport a l'index de l'autre paquet. Incrementer celui qui a été mis dans dest
-
-merge-insert sort : couper en deux notre liste dans deux vecteurs, faire tout ca dans une fonction qui prend en parametre un vecteur. Rappeler la fonction en recursive, faire le tri jusque au bout pour chaque vecteur. (Gauche droite)
