@@ -8,7 +8,7 @@ static bool	empty_line(std::string line);
 
 BitcoinExchange::BitcoinExchange(void)
 {
-	std::cerr << "Default constructor is useless because the class needs arguments to work" << std::endl;
+	std::cout << "Default constructor is useless because the class needs arguments to work" << std::endl;
 }
 
 BitcoinExchange::BitcoinExchange(std::string filename)
@@ -52,7 +52,7 @@ bool	BitcoinExchange::_parse_database(std::string filename)
 	read_fd.open(filename.c_str(), std::fstream::in); //open file
 	if (read_fd.fail() == true)
 	{
-		std::cerr << "Error: could not open database file" << std::endl;
+		std::cout << "Error: could not open database file" << std::endl;
 		return (false);
 	}
 	for ( ; std::getline(read_fd, line); ) //get line in file
@@ -61,7 +61,7 @@ bool	BitcoinExchange::_parse_database(std::string filename)
 			continue ;
 		else if (i == 0 && line != "date,exchange_rate") //check for precise first line of file
 		{
-			std::cerr << "Missing \"date,exchange_rate\" at the beginning of database" << std::endl;
+			std::cout << "Missing \"date,exchange_rate\" at the beginning of database" << std::endl;
 			return (false);
 		}
 		else if (i == 0 && line == "date,exchange_rate") //accept correct first line
@@ -81,25 +81,25 @@ bool	BitcoinExchange::_parse_database(std::string filename)
 			return (false);
 		if (!(std::stringstream(price_str) >> price))
 		{
-			std::cerr << "Float overflow in database value" << std::endl;
+			std::cout << "Float overflow in database value" << std::endl;
 			return (false);
 		}
 		check = this->_database.insert(std::pair<std::string, float>(date, price));
 		if (!check.second)
 		{
-			std::cerr << "Duplicate value in database" << std::endl;
+			std::cout << "Duplicate value in database" << std::endl;
 			return (false);
 		}
 		++i;
 	}
 	if (i == 0 && line == "")
 	{
-		std::cerr << "Empty database file" << std::endl;
+		std::cout << "Empty database file" << std::endl;
 		return (false);
 	}
 	if (i == 1)
 	{
-		std::cerr << "Database needs atleast one element as a reference" << std::endl;
+		std::cout << "Database needs atleast one element as a reference" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -120,7 +120,7 @@ void	BitcoinExchange::_parse_input_file(std::string filename)
 	read_fd.open(filename.c_str(), std::fstream::in); //open file
 	if (read_fd.fail() == true)
 	{
-		std::cerr << "Error: could not open input file" << std::endl;
+		std::cout << "Error: could not open input file" << std::endl;
 		return ;
 	}
 	for ( ; std::getline(read_fd, line); ) //get line in file
@@ -129,7 +129,7 @@ void	BitcoinExchange::_parse_input_file(std::string filename)
 			continue ;
 		else if (i == 0 && line != "date | value") //check for precise first line of file
 		{
-			std::cerr << "Missing \"date | value\" at the beginning of input file" << std::endl;
+			std::cout << "Missing \"date | value\" at the beginning of input file" << std::endl;
 			return ;
 		}
 		else if (i == 0 && line == "date | value") //accept correct first line
@@ -150,13 +150,13 @@ void	BitcoinExchange::_parse_input_file(std::string filename)
 			continue ;
 		if (!(std::stringstream(value_str) >> value))
 		{
-			std::cerr << "Error : Float overflow" << std::endl;
+			std::cout << "Error : Float overflow" << std::endl;
 			continue ;
 		}
 		it = getDatabase().lower_bound(date);
 		if (it == getDatabase().begin() && it->first != date)
 		{
-			std::cerr << "Error : No data before " << date << std::endl;
+			std::cout << "Error : No data before " << date << std::endl;
 			continue ;
 		}
 		if (it->first != date)
@@ -164,9 +164,9 @@ void	BitcoinExchange::_parse_input_file(std::string filename)
 		std::cout << date + " ==> " << it->second * value << std::endl;
 	}
 	if (i == 0 && line == "")
-		std::cerr << "Empty input file" << std::endl;
+		std::cout << "Empty input file" << std::endl;
 	if (i == 1)
-		std::cerr << "Input file needs atleast one element" << std::endl;
+		std::cout << "Input file needs atleast one element" << std::endl;
 }
 
 static bool	check_valid_date_format(std::string date, int trigger)
@@ -183,9 +183,9 @@ static bool	check_valid_date_format(std::string date, int trigger)
 		|| date.size() != 10)
 	{
 		if (trigger == 1)
-			std::cerr << date << " ==> Invalid format" << std::endl;
+			std::cout << date << " ==> Invalid format" << std::endl;
 		else
-			std::cerr << "Invalid format" << std::endl;
+			std::cout << "Invalid format" << std::endl;
 		return (false);
 	}
 	year = atoi(date.substr(start, end).c_str());
@@ -201,9 +201,9 @@ static bool	check_valid_date_format(std::string date, int trigger)
 		|| (day > get_nb_of_days_in_month(month))) //check correct number of days in month
 	{
 		if (trigger == 1)
-			std::cerr << date << " ==> Invalid date" << std::endl;
+			std::cout << date << " ==> Invalid date" << std::endl;
 		else
-			std::cerr << "Invalid date" << std::endl;
+			std::cout << "Invalid date" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -227,7 +227,7 @@ static bool	check_input_file_value(std::string value)
 		count = 2;
 	if (count > 1)
 	{
-		std::cerr << "Error : " << value << " ==> Bad input" << std::endl;
+		std::cout << "Error : " << value << " ==> Bad input" << std::endl;
 		return (false);
 	}
 	return (true);
@@ -248,7 +248,7 @@ static bool	check_database_value(std::string value)
 	}
 	if (count > 1)
 	{
-		std::cerr << "Invalid value in database" << std::endl;
+		std::cout << "Invalid value in database" << std::endl;
 		return (false);
 	}
 	return (true);
