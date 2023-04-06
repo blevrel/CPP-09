@@ -35,7 +35,6 @@ bool	RPN::_perform_op(std::string sign)
 	int	nb_a;
 	int	nb_b;
 
-	//faire les operations selon le signe
 	nb_a = this->_stack.top();
 	this->_stack.pop();
 	nb_b = this->_stack.top();

@@ -161,7 +161,7 @@ void	BitcoinExchange::_parse_input_file(std::string filename)
 		}
 		if (it->first != date)
 			--it;
-		std::cout << date + " ==> " << it->second * value << std::endl;
+		std::cout << date + " ==> " << value << " = " << it->second * value << std::endl;
 	}
 	if (i == 0 && line == "")
 		std::cout << "Empty input file" << std::endl;
@@ -211,8 +211,8 @@ static bool	check_valid_date_format(std::string date, int trigger)
 
 static bool	check_input_file_value(std::string value)
 {
-	int	count = 0;
-	int	nb_test = atoi(value.c_str());
+	int		count = 0;
+	float	nb_test = atof(value.c_str());
 
 	for (size_t i = 0; i < value.size(); ++i)
 	{
